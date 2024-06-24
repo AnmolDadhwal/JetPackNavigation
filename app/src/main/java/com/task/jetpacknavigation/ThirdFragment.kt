@@ -59,6 +59,7 @@ class ThirdFragment : Fragment() {
                 dialog.setContentView(dialogBinding.root)
                 dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 dialog.show()
+                mainActivity?.navController?.popBackStack()
             }
         }
         binding?.btnCancel?.setOnClickListener {
