@@ -8,4 +8,8 @@
     <string name="enter_otp">Enter OTP</string>
     <string name="message">Enter the verification code sent on your Email</string>
     <string name="Verify">Verify</string>
+    <string name="new_pass">Enter New Password</string>
+    <string name="conf_pass">Enter Confirm Password</string>
+    <string name="save_new_pass">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

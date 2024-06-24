@@ -1,35 +1,30 @@
 package com.task.jetpacknavigation
 
-import android.content.Intent
-import android.net.Uri
+import android.app.Dialog
 import android.os.Bundle
-import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.task.jetpacknavigation.databinding.FragmentJetPackNavigationBinding
-import java.util.regex.Pattern
-import kotlin.random.Random
-import kotlin.random.nextInt
+import com.task.jetpacknavigation.databinding.FragmentThirdBinding
+import com.task.jetpacknavigation.databinding.GifcongratsBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
 /**
  * A simple [Fragment] subclass.
- * Use the [JetPackNavigation.newInstance] factory method to
+ * Use the [ThirdFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class JetPackNavigation : Fragment() {
+class ThirdFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var mainActivity:MainActivity?=null
-    private var bundle=Bundle()
-    private var intent=Intent(Intent.ACTION_SENDTO)
-    private var binding:FragmentJetPackNavigationBinding?=null
+    private var binding: FragmentThirdBinding?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity=activity as MainActivity
@@ -44,31 +39,32 @@ class JetPackNavigation : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding= FragmentJetPackNavigationBinding.inflate(layoutInflater)
+        binding= FragmentThirdBinding.inflate(layoutInflater)
         return binding?.root
-        //return inflater.inflate(R.layout.fragment_jet_pack_navigation, container, false)
+       // return inflater.inflate(R.layout.fragment_third, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.btnSend?.setOnClickListener {
-            if (binding?.etEnterEmail?.text?.toString()?.trim().isNullOrEmpty()){
-                binding?.etEnterEmail?.error="Enter Email"
-            }else if(Pattern.matches(Patterns.EMAIL_ADDRESS.toString(),binding?.etEnterEmail?.text.toString().trim())==false){
-                binding?.etEnterEmail?.error = "Enter Valid Email"
-            }else{
-                val otp=Random.nextInt(1000..9999)
-                bundle.putString("OTP", otp.toString())
-                mainActivity?.navController?.navigate(R.id.action_jetPackNavigation_to_secondFragment2,bundle)
-
-                intent.data= Uri.parse("mailto:")
-                intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(binding?.etEnterEmail?.text.toString()))
-                intent.putExtra("subject","OTP is:-${otp.toString().trim()}")
-                startActivity(intent)
+        super.onViewCreated(view, savedInstanceState)
+        binding?.btnSave?.setOnClickListener{
+            if (binding?.etNewPass?.text?.toString()?.trim().isNullOrEmpty()){
+                binding?.etNewPass?.error="Please Enter Password"
+            }else if (binding?.etConfPass?.text?.toString()?.trim().isNullOrEmpty()){
+                binding?.etConfPass?.error="Please Enter Password"
+            }else if (binding?.etNewPass?.text?.toString()!=binding?.etConfPass?.text?.toString()){
+                binding?.etConfPass?.error="Enter Similar Password"
+            }else if (binding?.etNewPass?.text?.toString()==binding?.etConfPass?.text?.toString()) {
+                val dialog = Dialog(mainActivity!!)
+                val dialogBinding = GifcongratsBinding.inflate(layoutInflater)
+                dialog.setContentView(dialogBinding.root)
+                dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                dialog.show()
             }
         }
-        super.onViewCreated(view, savedInstanceState)
+        binding?.btnCancel?.setOnClickListener {
+            mainActivity?.navController?.popBackStack()
+        }
     }
-
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -76,12 +72,12 @@ class JetPackNavigation : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment JetPackNavigation.
+         * @return A new instance of fragment ThirdFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            JetPackNavigation().apply {
+            ThirdFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

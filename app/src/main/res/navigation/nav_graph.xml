@@ -20,5 +20,17 @@
         android:id="@+id/secondFragment"
         android:name="com.task.jetpacknavigation.SecondFragment"
         android:label="SecondFragment"
-        tools:layout="@layout/fragment_second"/>
+        tools:layout="@layout/fragment_second">
+        <action
+            android:id="@+id/action_secondFragment_to_thirdFragment"
+            app:destination="@id/thirdFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/jetPackNavigation" />
+    </fragment>
+    <fragment
+        android:id="@+id/thirdFragment"
+        android:name="com.task.jetpacknavigation.ThirdFragment"
+        android:label="fragment_third"
+        tools:layout="@layout/fragment_third" />
 </navigation>

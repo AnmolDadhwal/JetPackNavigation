@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import com.task.jetpacknavigation.databinding.FragmentSecondBinding
-import com.task.jetpacknavigation.databinding.GifcongratsBinding
 import com.task.jetpacknavigation.databinding.GifsorryBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -55,26 +54,26 @@ class SecondFragment : Fragment() {
                 binding?.etOtp2?.requestFocus()
             }
         }
-        binding?.etOtp2?.doOnTextChanged { text,_,_,_ ->
+        binding?.etOtp2?.doOnTextChanged{ text,_,_,_ ->
             if ((text?.length?:0)>0){
                 binding?.etOtp3?.requestFocus()
-            }else if ((text?.length?:0)==0){
+            }else if((text?.length?:0)==0){
                 binding?.etOtp1?.requestFocus()
             }
         }
-        binding?.etOtp3?.doOnTextChanged { text,_,_,_ ->
+        binding?.etOtp3?.doOnTextChanged{ text,_,_,_ ->
             if ((text?.length?:0)>0){
                 binding?.etOtp4?.requestFocus()
             }else if ((text?.length?:0)==0){
                 binding?.etOtp2?.requestFocus()
             }
         }
-        binding?.etOtp4?.doOnTextChanged { text,_,_,_ ->
-            if ((text?.length?:0)==0){
+        binding?.etOtp4?.doOnTextChanged{ text,_,_,_ ->
+            if (text?.length==0){
                 binding?.etOtp3?.requestFocus()
             }
         }
-        binding?.btnVerify?.setOnClickListener {
+        binding?.btnVerify?.setOnClickListener{
             number=binding?.etOtp1?.text.toString().trim()+
             binding?.etOtp2?.text.toString().trim()+
             binding?.etOtp3?.text.toString().trim()+
@@ -88,12 +87,7 @@ class SecondFragment : Fragment() {
             }else if (binding?.etOtp4?.text?.toString()?.trim().isNullOrEmpty()){
                 binding?.etOtp4?.error="Please Enter"
             }else if (otp==number){
-                val dialog = Dialog(mainActivity!!)
-                val dialogBinding =GifcongratsBinding.inflate(layoutInflater)
-                dialog.setContentView(dialogBinding.root)
-                dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-                dialog.show()
-                mainActivity?.navController?.popBackStack()
+                mainActivity?.navController?.navigate(R.id.action_secondFragment_to_thirdFragment)
             }
             else{
                 val dialog = Dialog(mainActivity!!)
